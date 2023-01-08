@@ -6,8 +6,6 @@ import { api } from "../utils/api";
 import { NavBar } from "../components/NavBar";
 
 const Home: NextPage = () => {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
-
   return (
     <>
       <Head>
