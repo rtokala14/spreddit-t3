@@ -96,7 +96,7 @@ export const NavBar: React.FC = () => {
                 rel={"noreferrer"}
                 className=" hidden md:block"
               >
-                <FaGithub size={35} className=" hover:text-lighter" />
+                <FaGithub size={25} className=" hover:text-lighter" />
               </a>
             </div>
           ) : (
