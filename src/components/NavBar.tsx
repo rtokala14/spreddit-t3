@@ -132,7 +132,7 @@ export const NavBar: React.FC = () => {
                   <FaUser size={25} />
                 )}
                 <h2 className=" hidden text-xl lg:block">
-                  {session ? `${session.user?.name}` : "Personalize"}
+                  {session ? `${session.user!.name!}` : "Personalize"}
                 </h2>
                 <FaAngleDown size={20} />
               </div>
