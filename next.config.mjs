@@ -21,6 +21,12 @@ const config = {
         port: "",
         pathname: "/avatars/**/*.png",
       },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        port: "",
+        pathname: "/u/**",
+      },
     ],
   },
 };

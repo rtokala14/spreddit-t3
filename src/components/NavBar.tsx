@@ -14,6 +14,7 @@ import {
   FaUser,
   FaSignOutAlt,
   FaUserCog,
+  FaSignInAlt,
 } from "react-icons/fa";
 
 export const NavBar: React.FC = () => {
@@ -95,7 +96,7 @@ export const NavBar: React.FC = () => {
                 rel={"noreferrer"}
                 className=" hidden md:block"
               >
-                <FaGithub size={25} className=" hover:text-lighter" />
+                <FaGithub size={35} className=" hover:text-lighter" />
               </a>
             </div>
           ) : (
@@ -110,9 +111,10 @@ export const NavBar: React.FC = () => {
               <button
                 // eslint-disable-next-line @typescript-eslint/no-misused-promises
                 onClick={async () => await signIn()}
-                className=" rounded-3xl bg-primary p-2 pl-4 pr-4 text-lg text-white"
+                className=" flex items-center justify-center gap-2 rounded-3xl bg-primary p-2 pl-4 pr-4 text-lg text-white"
               >
-                Login
+                <FaSignInAlt size={20} />
+                <h3>Login</h3>
               </button>
             </div>
           )}
