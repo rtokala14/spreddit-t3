@@ -4,6 +4,7 @@ import DiscordProvider from "next-auth/providers/discord";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+import Email from "next-auth/providers/email";
 
 import { env } from "../../../env/server.mjs";
 import { prisma } from "../../../server/db";
@@ -35,6 +36,10 @@ export const authOptions: NextAuthOptions = {
       httpOptions: {
         timeout: 10000,
       },
+    }),
+    Email({
+      server: env.EMAIL_SERVER,
+      from: env.EMAIL_FROM,
     }),
     /**
      * ...add more providers here
