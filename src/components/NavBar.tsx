@@ -102,7 +102,7 @@ export const NavBar: React.FC = () => {
             </a>
             <button
               // eslint-disable-next-line @typescript-eslint/no-misused-promises
-              onClick={() => signIn()}
+              onClick={async () => await signIn()}
               className=" rounded-3xl bg-primary p-2 pl-4 pr-4 text-lg text-white"
             >
               Login
@@ -139,9 +139,12 @@ export const NavBar: React.FC = () => {
               <Menu.Item>
                 {({ active }) => (
                   <div className="flex  w-full items-center justify-start gap-3 rounded-md border border-transparent pt-2 pb-2 pl-2 hover:cursor-pointer hover:border-lighter ">
-                    {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
-
-                    <button onClick={() => signOut()}>Sign Out</button>
+                    <button
+                      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                      onClick={async () => await signOut()}
+                    >
+                      Sign Out
+                    </button>
                   </div>
                 )}
               </Menu.Item>
