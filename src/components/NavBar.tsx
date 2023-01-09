@@ -115,7 +115,7 @@ export const NavBar: React.FC = () => {
               {session ? (
                 <Image
                   src={session.user!.image!}
-                  alt={`${session.user?.name} profile picture`}
+                  alt={`${session.user!.name!} profile picture`}
                   width={30}
                   height={30}
                   className="rounded-full"
