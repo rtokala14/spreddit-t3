@@ -32,7 +32,7 @@ const SignIn = ({
         <div className=" flex w-64 items-center justify-center rounded-md border border-red-600 bg-red-100 p-2 text-sm text-red-600">
           {route.query.error.toString() === "OAuthAccountNotLinked"
             ? "The email is already in use with another account. Please login with the original provider to continue."
-            : `${route.query.error}`}
+            : `${route.query.error.toString()}`}
         </div>
       ) : (
         <></>
