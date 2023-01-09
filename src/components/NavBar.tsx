@@ -32,7 +32,7 @@ export const NavBar: React.FC = () => {
           href={"/"}
           className=" flex flex-row items-center gap-2 pl-2 pr-2 md:pl-4 md:pr-4"
         >
-          <FaReddit color="#15876c" size={40} />
+          <FaReddit className=" text-primary" size={40} />
           <h1 className=" hidden text-3xl font-semibold text-primary md:block">
             Spreddit
           </h1>
