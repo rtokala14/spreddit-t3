@@ -10,10 +10,10 @@ import { api } from "../utils/api";
 
 const Post = ({ postData }: { postData: Post }) => {
   const { data: subreddit } = api.posts.getSub.useQuery({
-    subId: postData.subredditId!,
+    subId: postData.subredditId as string,
   });
   const { data: username } = api.posts.getUser.useQuery({
-    userId: postData.userId!,
+    userId: postData.userId,
   });
   return (
     <div className=" flex w-full rounded-md border border-primary text-white">
@@ -27,8 +27,8 @@ const Post = ({ postData }: { postData: Post }) => {
       <div className=" flex w-full flex-col gap-2 bg-gray-900 p-2">
         {/* Top Section (Subreddit, posted by, timestamp) */}
         <div className=" flex gap-2">
-          <p className=" text-xs font-medium">{`s/${subreddit?.name}`}</p>
-          <p className=" text-xs">{`u/${username?.name}`}</p>
+          <p className=" text-xs font-medium">{`s/${subreddit!.name}`}</p>
+          <p className=" text-xs">{`u/${username!.name!}`}</p>
           <p className=" text-xs">{postData.createdAt.toLocaleDateString()}</p>
         </div>
         {/* Post Content */}

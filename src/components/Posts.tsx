@@ -9,7 +9,7 @@ const Posts = () => {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        posts?.map((post) => <Post postData={post} />)
+        posts?.map((post) => <Post key={post.id} postData={post} />)
       )}
     </div>
   );
