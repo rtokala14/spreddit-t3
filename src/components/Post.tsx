@@ -17,6 +17,8 @@ import { api } from "../utils/api";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocal from "dayjs/plugin/updateLocale";
+import { useSession } from "next-auth/react";
+import { useState } from "react";
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocal);
 dayjs.updateLocale("en", {
@@ -48,9 +50,9 @@ const Post = ({
   };
 }) => {
   console.log(postData.title, postData);
+  const session = useSession();
 
-  const upvoteMutation = api.posts.upvote.useMutation().mutateAsync;
-  const downvoteMutation = api.posts.downvote.useMutation().mutateAsync;
+  const voteMutation = api.posts.upsertVote.useMutation().mutateAsync;
 
   function countVotes() {
     const votes =
@@ -65,35 +67,88 @@ const Post = ({
     return votes;
   }
 
-  // function handleUpvote() {
-  //   if (postData.votes.find(vote => {
+  const [voteCount, setVoteCount] = useState(countVotes());
+  const [hasUpvote, setHasUpvote] = useState(
+    postData.votes.filter((vote) => {
+      if (vote.direction === "UP" && vote.userId === session.data?.user?.id)
+        return true;
+      return false;
+    }).length > 0
+      ? true
+      : false
+  );
+  const [hasDownvote, setHasDownvote] = useState(
+    postData.votes.filter((vote) => {
+      if (vote.direction === "DOWN" && vote.userId === session.data?.user?.id)
+        return true;
+      return false;
+    }).length > 0
+      ? true
+      : false
+  );
 
-  //   }))
-  // }
+  const currVoteId = postData.votes.filter((vote) => {
+    if (vote.userId === session.data?.user?.id) return true;
+    return false;
+  })[0]?.id;
 
   return (
     <div className=" flex w-full rounded-md border border-primary text-white">
       {/* Left upvote downvote section */}
       <div className=" flex h-full w-14 flex-col items-center justify-start bg-black p-2">
-        <FaAngleDoubleUp
-          size={25}
-          className="text-lighter hover:cursor-pointer"
-          onClick={() =>
-            void (async () => {
-              await upvoteMutation({ postId: postData.id });
-            })()
-          }
-        />
-        <p>{countVotes()}</p>
-        <FaAngleDoubleDown
-          size={25}
-          className="text-lighter hover:cursor-pointer"
-          onClick={() =>
-            void (async () => {
-              await downvoteMutation({ postId: postData.id });
-            })()
-          }
-        />
+        {hasUpvote ? (
+          <FaAngleDoubleUp
+            size={25}
+            className="text-primary hover:cursor-pointer"
+            // onClick={() => handleUpvote}
+          />
+        ) : (
+          <FaAngleDoubleUp
+            size={25}
+            className="text-white hover:cursor-pointer"
+            onClick={() =>
+              void (async () => {
+                await voteMutation({
+                  postId: postData.id,
+                  newDirection: "UP",
+                  voteId: currVoteId || "RandomString",
+                });
+                setVoteCount(voteCount + 1);
+                setHasUpvote(true);
+                setHasDownvote(false);
+              })()
+            }
+          />
+        )}
+        <p>{voteCount}</p>
+        {hasDownvote ? (
+          <FaAngleDoubleDown
+            size={25}
+            className="text-primary hover:cursor-pointer"
+            // onClick={() =>
+            //   void (async () => {
+            //     await downvoteMutation({ postId: postData.id });
+            //   })()
+            // }
+          />
+        ) : (
+          <FaAngleDoubleDown
+            size={25}
+            className="text-white hover:cursor-pointer"
+            onClick={() =>
+              void (async () => {
+                await voteMutation({
+                  postId: postData.id,
+                  newDirection: "DOWN",
+                  voteId: currVoteId || "RandomString",
+                });
+                setVoteCount(voteCount - 1);
+                setHasDownvote(true);
+                setHasUpvote(false);
+              })()
+            }
+          />
+        )}
       </div>
       {/* Main post data */}
       <div className=" flex w-full flex-col gap-2 bg-gray-900 p-2">
