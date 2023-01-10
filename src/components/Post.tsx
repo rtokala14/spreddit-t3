@@ -8,6 +8,29 @@ import {
 } from "react-icons/fa";
 import { api } from "../utils/api";
 
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import updateLocal from "dayjs/plugin/updateLocale";
+dayjs.extend(relativeTime);
+dayjs.extend(updateLocal);
+dayjs.updateLocale("en", {
+  relativeTime: {
+    future: "in %s",
+    past: "%s",
+    s: "1m",
+    m: "1m",
+    mm: "%dm",
+    h: "1h",
+    hh: "%dh",
+    d: "1d",
+    dd: "%dd",
+    M: "1M",
+    MM: "%dM",
+    y: "1y",
+    yy: "%dy",
+  },
+});
+
 const Post = ({ postData }: { postData: Post }) => {
   const { data: subreddit } = api.posts.getSub.useQuery({
     subId: postData.subredditId as string,
@@ -32,7 +55,7 @@ const Post = ({ postData }: { postData: Post }) => {
               <p className=" text-xs font-medium">{`s/${subreddit?.name}`}</p>
               <p className=" text-xs font-light">{`u/${username.name!}`}</p>
               <p className=" text-xs font-extralight">
-                {postData.createdAt.toLocaleDateString()}
+                {dayjs(postData.createdAt).fromNow()}
               </p>
             </div>
             {/* Post Content */}
