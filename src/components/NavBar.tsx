@@ -27,7 +27,7 @@ export const NavBar: React.FC = () => {
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
         rel="stylesheet"
       />
-      <nav className=" fixed top-0 z-50 flex w-full flex-row items-center justify-start gap-0 bg-black pt-3 text-white shadow-sm shadow-lightest md:gap-2">
+      <nav className=" fixed top-0 z-50 flex h-14 w-full flex-row items-center justify-start gap-0 bg-black pt-1 text-white shadow-sm shadow-lightest md:gap-2">
         {/* Icon + Logo */}
         <Link
           href={"/"}
@@ -41,7 +41,7 @@ export const NavBar: React.FC = () => {
         {/* Dropdown */}
         <Menu>
           <Menu.Button className={"relative hidden sm:block "}>
-            <div className=" ui-active:border-lighter flex  w-20 items-center justify-between gap-2 rounded-lg border-lighter pb-3 pt-3 pl-2 pr-2 hover:border lg:w-52">
+            <div className=" ui-active:border-lighter flex  w-20 items-center justify-between gap-2 rounded-lg border-lighter pb-1 pl-2 pr-2 hover:border lg:w-52">
               <FaHome size={25} />
               <h2 className=" hidden text-2xl lg:block">Home</h2>
               <FaAngleDown size={20} />
@@ -84,7 +84,7 @@ export const NavBar: React.FC = () => {
           }}
         />
         {/* Util Icons */}
-        <div className=" flex max-w-2xl flex-grow justify-end">
+        <div className=" flex max-w-2xl flex-grow justify-end gap-3">
           {session ? (
             <div className=" ml-3 mr-2 flex items-center justify-center gap-2">
               <FaComment size={25} className=" hover:text-lighter" />
@@ -100,7 +100,7 @@ export const NavBar: React.FC = () => {
               </a>
             </div>
           ) : (
-            <div className=" flex items-center justify-center gap-2">
+            <div className=" flex items-center justify-center gap-3">
               <a
                 href="https://github.com/rtokala14/spreddit-t3"
                 target={"_blank"}
@@ -111,7 +111,7 @@ export const NavBar: React.FC = () => {
               <button
                 // eslint-disable-next-line @typescript-eslint/no-misused-promises
                 onClick={async () => await signIn()}
-                className=" flex items-center justify-center gap-2 rounded-3xl bg-primary p-2 pl-4 pr-4 text-lg text-white"
+                className=" flex items-center justify-center gap-2 rounded-3xl bg-primary py-1 pl-4 pr-4 text-lg text-white"
               >
                 <FaSignInAlt size={20} />
                 <h3>Login</h3>
@@ -121,7 +121,7 @@ export const NavBar: React.FC = () => {
           {/* Settings dropdown */}
           <Menu>
             <Menu.Button className={"relative"}>
-              <div className=" ui-active:border-lighter flex  w-20 items-center justify-between gap-2 rounded-lg border-lighter pb-3 pt-3 pl-2 pr-2 hover:border lg:w-52">
+              <div className=" ui-active:border-lighter flex max-h-11  w-20 items-center justify-between gap-2 rounded-lg border-lighter pb-1 pl-2 pr-2 hover:border lg:w-52">
                 {session ? (
                   <Image
                     src={session.user!.image!}
@@ -131,7 +131,7 @@ export const NavBar: React.FC = () => {
                     className="rounded-full"
                   />
                 ) : (
-                  <FaUser size={25} />
+                  <FaUser size={20} />
                 )}
                 <h2 className=" hidden text-xl lg:block">
                   {session ? `${session.user!.name!}` : "Personalize"}

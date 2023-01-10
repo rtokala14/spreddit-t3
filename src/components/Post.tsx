@@ -30,8 +30,8 @@ const Post = ({ postData }: { postData: Post }) => {
             {/* Top Section (Subreddit, posted by, timestamp) */}
             <div className=" flex gap-2">
               <p className=" text-xs font-medium">{`s/${subreddit?.name}`}</p>
-              <p className=" text-xs">{`u/${username.name!}`}</p>
-              <p className=" text-xs">
+              <p className=" text-xs font-light">{`u/${username.name!}`}</p>
+              <p className=" text-xs font-extralight">
                 {postData.createdAt.toLocaleDateString()}
               </p>
             </div>
@@ -42,7 +42,7 @@ const Post = ({ postData }: { postData: Post }) => {
                 {postData.title}
               </div>
               {/* Post body */}
-              <div>{postData.body}</div>
+              <div className=" font-light">{postData.body}</div>
             </div>
             {/* Post actions */}
             <div className=" mt-2 flex justify-evenly">
