@@ -83,4 +83,22 @@ export const postsRouter = createTRPCRouter({
 
       return ret;
     }),
+  deleteVote: protectedProcedure
+    .input(
+      z.object({
+        voteID: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { prisma } = ctx;
+      const { voteID } = input;
+
+      const res = prisma.vote.delete({
+        where: {
+          id: voteID,
+        },
+      });
+
+      return res;
+    }),
 });

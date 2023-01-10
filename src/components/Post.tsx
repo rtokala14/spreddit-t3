@@ -53,6 +53,7 @@ const Post = ({
   const session = useSession();
 
   const voteMutation = api.posts.upsertVote.useMutation().mutateAsync;
+  const deleteVote = api.posts.deleteVote.useMutation().mutateAsync;
 
   function countVotes() {
     const votes =
@@ -86,11 +87,14 @@ const Post = ({
       ? true
       : false
   );
+  const [currVoteId, setCurrVoteId] = useState(
+    postData.votes.filter((vote) => {
+      if (vote.userId === session.data?.user?.id) return true;
+      return false;
+    })[0]?.id
+  );
 
-  const currVoteId = postData.votes.filter((vote) => {
-    if (vote.userId === session.data?.user?.id) return true;
-    return false;
-  })[0]?.id;
+  console.log("voteID", currVoteId);
 
   return (
     <div className=" flex w-full rounded-md border border-primary text-white">
@@ -100,7 +104,16 @@ const Post = ({
           <FaAngleDoubleUp
             size={25}
             className="text-primary hover:cursor-pointer"
-            // onClick={() => handleUpvote}
+            onClick={() =>
+              void (async () => {
+                await deleteVote({
+                  voteID: currVoteId ? currVoteId : "",
+                });
+                setCurrVoteId("NoVote");
+                setVoteCount(voteCount - 1);
+                setHasUpvote(false);
+              })()
+            }
           />
         ) : (
           <FaAngleDoubleUp
@@ -108,12 +121,13 @@ const Post = ({
             className="text-white hover:cursor-pointer"
             onClick={() =>
               void (async () => {
-                await voteMutation({
+                const res = await voteMutation({
                   postId: postData.id,
                   newDirection: "UP",
                   voteId: currVoteId || "RandomString",
                 });
-                setVoteCount(voteCount + 1);
+                setCurrVoteId(res.id);
+                setVoteCount(hasDownvote ? voteCount + 2 : voteCount + 1);
                 setHasUpvote(true);
                 setHasDownvote(false);
               })()
@@ -125,11 +139,16 @@ const Post = ({
           <FaAngleDoubleDown
             size={25}
             className="text-primary hover:cursor-pointer"
-            // onClick={() =>
-            //   void (async () => {
-            //     await downvoteMutation({ postId: postData.id });
-            //   })()
-            // }
+            onClick={() =>
+              void (async () => {
+                await deleteVote({
+                  voteID: currVoteId ? currVoteId : "",
+                });
+                setCurrVoteId("NoVote");
+                setVoteCount(voteCount + 1);
+                setHasDownvote(false);
+              })()
+            }
           />
         ) : (
           <FaAngleDoubleDown
@@ -137,12 +156,13 @@ const Post = ({
             className="text-white hover:cursor-pointer"
             onClick={() =>
               void (async () => {
-                await voteMutation({
+                const res = await voteMutation({
                   postId: postData.id,
                   newDirection: "DOWN",
                   voteId: currVoteId || "RandomString",
                 });
-                setVoteCount(voteCount - 1);
+                setCurrVoteId(res.id);
+                setVoteCount(hasUpvote ? voteCount - 2 : voteCount - 1);
                 setHasDownvote(true);
                 setHasUpvote(false);
               })()
