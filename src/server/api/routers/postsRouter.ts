@@ -3,7 +3,14 @@ import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const postsRouter = createTRPCRouter({
   getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.post.findMany();
+    return ctx.prisma.post.findMany({
+      include: {
+        subreddit: true,
+        votes: true,
+        comments: true,
+        author: true,
+      },
+    });
   }),
   getSub: publicProcedure
     .input(

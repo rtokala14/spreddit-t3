@@ -1,4 +1,10 @@
-import { type Post } from "@prisma/client";
+import {
+  type Comment,
+  type Subreddit,
+  type User,
+  type Vote,
+  type Post,
+} from "@prisma/client";
 import {
   FaAngleDoubleDown,
   FaAngleDoubleUp,
@@ -31,89 +37,91 @@ dayjs.updateLocale("en", {
   },
 });
 
-const Post = ({ postData }: { postData: Post }) => {
-  const { data: subreddit } = api.posts.getSub.useQuery({
-    subId: postData.subredditId as string,
-  });
-  const { data: username } = api.posts.getUser.useQuery({
-    userId: postData.userId,
-  });
+const Post = ({
+  postData,
+}: {
+  postData: Post & {
+    subreddit: Subreddit | null;
+    comments: Comment[];
+    votes: Vote[];
+    author: User;
+  };
+}) => {
+  console.log(postData.title, postData);
+
   const upvoteMutation = api.posts.upvote.useMutation().mutateAsync;
   const downvoteMutation = api.posts.downvote.useMutation().mutateAsync;
-  const { data: upvotes } = api.posts.getVotesCount.useQuery({
-    postId: postData.id,
-  });
-  const { data: downvotes } = api.posts.getDownVotesCount.useQuery({
-    postId: postData.id,
-  });
-  const votes =
-    downvotes && upvotes ? upvotes._count.id - downvotes._count.id : 0;
+
+  function countVotes() {
+    const votes =
+      postData.votes.filter((vote) => {
+        if (vote.direction === "UP") return true;
+        return false;
+      }).length -
+      postData.votes.filter((vote) => {
+        if (vote.direction === "DOWN") return true;
+        return false;
+      }).length;
+    return votes;
+  }
 
   return (
     <div className=" flex w-full rounded-md border border-primary text-white">
       {/* Left upvote downvote section */}
-      {subreddit && username && downvotes && upvotes ? (
-        <>
-          <div className=" flex h-full w-14 flex-col items-center justify-start bg-black p-2">
-            <FaAngleDoubleUp
-              size={25}
-              className="text-lighter hover:cursor-pointer"
-              onClick={() =>
-                void (async () => {
-                  await upvoteMutation({ postId: postData.id });
-                })()
-              }
-            />
-            <p>{votes}</p>
-            <FaAngleDoubleDown
-              size={25}
-              className="text-lighter hover:cursor-pointer"
-              onClick={() =>
-                void (async () => {
-                  await downvoteMutation({ postId: postData.id });
-                })()
-              }
-            />
+      <div className=" flex h-full w-14 flex-col items-center justify-start bg-black p-2">
+        <FaAngleDoubleUp
+          size={25}
+          className="text-lighter hover:cursor-pointer"
+          onClick={() =>
+            void (async () => {
+              await upvoteMutation({ postId: postData.id });
+            })()
+          }
+        />
+        <p>{countVotes()}</p>
+        <FaAngleDoubleDown
+          size={25}
+          className="text-lighter hover:cursor-pointer"
+          onClick={() =>
+            void (async () => {
+              await downvoteMutation({ postId: postData.id });
+            })()
+          }
+        />
+      </div>
+      {/* Main post data */}
+      <div className=" flex w-full flex-col gap-2 bg-gray-900 p-2">
+        {/* Top Section (Subreddit, posted by, timestamp) */}
+        <div className=" flex gap-2">
+          <p className=" text-xs font-medium">{`s/${postData.subreddit?.name}`}</p>
+          <p className=" text-xs font-light">{`u/${postData.author.name}`}</p>
+          <p className=" text-xs font-extralight">
+            {dayjs(postData.createdAt).fromNow()}
+          </p>
+        </div>
+        {/* Post Content */}
+        <div>
+          {/* Post Title */}
+          <div className=" mb-1 text-xl font-semibold">{postData.title}</div>
+          {/* Post body */}
+          <div className=" font-light">{postData.body}</div>
+        </div>
+        {/* Post actions */}
+        <div className=" mt-2 flex justify-evenly">
+          {/* Comments */}
+          <div>
+            <FaCommentAlt size={17} className="text-gray-100" />
           </div>
-          {/* Main post data */}
-          <div className=" flex w-full flex-col gap-2 bg-gray-900 p-2">
-            {/* Top Section (Subreddit, posted by, timestamp) */}
-            <div className=" flex gap-2">
-              <p className=" text-xs font-medium">{`s/${subreddit?.name}`}</p>
-              <p className=" text-xs font-light">{`u/${username.name!}`}</p>
-              <p className=" text-xs font-extralight">
-                {dayjs(postData.createdAt).fromNow()}
-              </p>
-            </div>
-            {/* Post Content */}
-            <div>
-              {/* Post Title */}
-              <div className=" mb-1 text-xl font-semibold">
-                {postData.title}
-              </div>
-              {/* Post body */}
-              <div className=" font-light">{postData.body}</div>
-            </div>
-            {/* Post actions */}
-            <div className=" mt-2 flex justify-evenly">
-              {/* Comments */}
-              <div>
-                <FaCommentAlt size={17} className="text-gray-100" />
-              </div>
-              {/* Bookmark */}
-              <div>
-                <FaBookmark size={17} className="text-gray-100" />
-              </div>
-              {/* Share */}
-              <div>
-                <FaShare size={17} className="text-gray-100" />
-              </div>
-            </div>
+          {/* Bookmark */}
+          <div>
+            <FaBookmark size={17} className="text-gray-100" />
           </div>
-        </>
-      ) : (
-        <></>
-      )}
+          {/* Share */}
+          <div>
+            <FaShare size={17} className="text-gray-100" />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
