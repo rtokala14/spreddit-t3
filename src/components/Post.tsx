@@ -46,12 +46,13 @@ const Post = ({ postData }: { postData: Post }) => {
   const { data: downvotes } = api.posts.getDownVotesCount.useQuery({
     postId: postData.id,
   });
-  const votes = upvotes!._count.id - downvotes!._count.id;
+  const votes =
+    downvotes && upvotes ? upvotes!._count.id - downvotes!._count.id : 0;
 
   return (
     <div className=" flex w-full rounded-md border border-primary text-white">
       {/* Left upvote downvote section */}
-      {subreddit && username ? (
+      {subreddit && username && downvotes && upvotes ? (
         <>
           <div className=" flex h-full w-14 flex-col items-center justify-start bg-black p-2">
             <FaAngleDoubleUp
