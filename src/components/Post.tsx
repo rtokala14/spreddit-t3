@@ -65,6 +65,12 @@ const Post = ({
     return votes;
   }
 
+  // function handleUpvote() {
+  //   if (postData.votes.find(vote => {
+
+  //   }))
+  // }
+
   return (
     <div className=" flex w-full rounded-md border border-primary text-white">
       {/* Left upvote downvote section */}
@@ -93,8 +99,10 @@ const Post = ({
       <div className=" flex w-full flex-col gap-2 bg-gray-900 p-2">
         {/* Top Section (Subreddit, posted by, timestamp) */}
         <div className=" flex gap-2">
-          <p className=" text-xs font-medium">{`s/${postData.subreddit?.name}`}</p>
-          <p className=" text-xs font-light">{`u/${postData.author.name}`}</p>
+          <p className=" text-xs font-medium">{`s/${
+            postData.subreddit!.name
+          }`}</p>
+          <p className=" text-xs font-light">{`u/${postData.author.name!}`}</p>
           <p className=" text-xs font-extralight">
             {dayjs(postData.createdAt).fromNow()}
           </p>
