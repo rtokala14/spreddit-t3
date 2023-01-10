@@ -27,7 +27,7 @@ export const NavBar: React.FC = () => {
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
         rel="stylesheet"
       />
-      <nav className=" fixed top-0 flex w-full flex-row items-center justify-start gap-0 pt-3 text-white md:gap-2">
+      <nav className=" fixed top-0 z-50 flex w-full flex-row items-center justify-start gap-0 bg-black pt-3 text-white shadow-sm shadow-lightest md:gap-2">
         {/* Icon + Logo */}
         <Link
           href={"/"}

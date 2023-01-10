@@ -74,7 +74,7 @@ model Post {
     id        String    @id @default(cuid())
     title     String
     body      String
-    url       String
+    url       String?
     thumbnail String?
     createdAt DateTime  @default(now())
     author    User      @relation(name: "UserPosts", fields: [userId], references: [id])
