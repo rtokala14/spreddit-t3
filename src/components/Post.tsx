@@ -47,7 +47,7 @@ const Post = ({ postData }: { postData: Post }) => {
     postId: postData.id,
   });
   const votes =
-    downvotes && upvotes ? upvotes!._count.id - downvotes!._count.id : 0;
+    downvotes && upvotes ? upvotes._count.id - downvotes._count.id : 0;
 
   return (
     <div className=" flex w-full rounded-md border border-primary text-white">
