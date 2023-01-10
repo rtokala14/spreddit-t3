@@ -113,7 +113,7 @@ model Subreddit {
 model Vote {
     id        String        @id @default(cuid())
     direction VoteDirection
-    createdAt DateTime
+    createdAt DateTime?     @default(now())
     user      User          @relation(fields: [userId], references: [id])
     post      Post?         @relation(name: "PostVotes", fields: [postId], references: [id])
     comment   Comment?      @relation(name: "CommentVotes", fields: [commentId], references: [id])

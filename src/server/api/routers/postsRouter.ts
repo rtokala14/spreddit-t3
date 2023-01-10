@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const postsRouter = createTRPCRouter({
   getAll: publicProcedure.query(({ ctx }) => {
@@ -39,5 +39,107 @@ export const postsRouter = createTRPCRouter({
       });
 
       return username;
+    }),
+  upvote: protectedProcedure
+    .input(
+      z.object({
+        postId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.session.user.id;
+
+      const { prisma } = ctx;
+
+      const obj = prisma.vote.create({
+        data: {
+          post: {
+            connect: {
+              id: input.postId,
+            },
+          },
+          user: {
+            connect: {
+              id: userId,
+            },
+          },
+          direction: "UP",
+        },
+      });
+
+      return obj;
+    }),
+  downvote: protectedProcedure
+    .input(
+      z.object({
+        postId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.session.user.id;
+
+      const { prisma } = ctx;
+
+      const obj = prisma.vote.create({
+        data: {
+          post: {
+            connect: {
+              id: input.postId,
+            },
+          },
+          user: {
+            connect: {
+              id: userId,
+            },
+          },
+          direction: "DOWN",
+        },
+      });
+
+      return obj;
+    }),
+  getVotesCount: publicProcedure
+    .input(
+      z.object({
+        postId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { prisma } = ctx;
+      const { postId } = input;
+
+      const upvotes = prisma.vote.aggregate({
+        _count: {
+          id: true,
+        },
+        where: {
+          postId: postId,
+          direction: "UP",
+        },
+      });
+
+      return upvotes;
+    }),
+  getDownVotesCount: publicProcedure
+    .input(
+      z.object({
+        postId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { prisma } = ctx;
+      const { postId } = input;
+
+      const downvotes = prisma.vote.aggregate({
+        _count: {
+          id: true,
+        },
+        where: {
+          postId: postId,
+          direction: "DOWN",
+        },
+      });
+
+      return downvotes;
     }),
 });

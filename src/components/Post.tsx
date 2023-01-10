@@ -38,15 +38,41 @@ const Post = ({ postData }: { postData: Post }) => {
   const { data: username } = api.posts.getUser.useQuery({
     userId: postData.userId,
   });
+  const upvoteMutation = api.posts.upvote.useMutation().mutateAsync;
+  const downvoteMutation = api.posts.downvote.useMutation().mutateAsync;
+  const { data: upvotes } = api.posts.getVotesCount.useQuery({
+    postId: postData.id,
+  });
+  const { data: downvotes } = api.posts.getDownVotesCount.useQuery({
+    postId: postData.id,
+  });
+  const votes = upvotes!._count.id - downvotes!._count.id;
+
   return (
     <div className=" flex w-full rounded-md border border-primary text-white">
       {/* Left upvote downvote section */}
       {subreddit && username ? (
         <>
           <div className=" flex h-full w-14 flex-col items-center justify-start bg-black p-2">
-            <FaAngleDoubleUp size={25} className="text-lighter" />
-            <p>20</p>
-            <FaAngleDoubleDown size={25} className="text-lighter" />
+            <FaAngleDoubleUp
+              size={25}
+              className="text-lighter hover:cursor-pointer"
+              onClick={() =>
+                void (async () => {
+                  await upvoteMutation({ postId: postData.id });
+                })()
+              }
+            />
+            <p>{votes}</p>
+            <FaAngleDoubleDown
+              size={25}
+              className="text-lighter hover:cursor-pointer"
+              onClick={() =>
+                void (async () => {
+                  await downvoteMutation({ postId: postData.id });
+                })()
+              }
+            />
           </div>
           {/* Main post data */}
           <div className=" flex w-full flex-col gap-2 bg-gray-900 p-2">
