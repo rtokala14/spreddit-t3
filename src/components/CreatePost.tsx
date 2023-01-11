@@ -1,4 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
+import { type Post } from "@prisma/client";
+import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 import { api } from "../utils/api";
 import CommunitySelector from "./CommunitySelector";
@@ -17,6 +19,8 @@ const CreatePost = ({
 
   const createTweetMutation = api.posts.createTweet.useMutation().mutateAsync;
   const voteMutation = api.posts.upsertVote.useMutation().mutateAsync;
+  const router = useRouter();
+
   return (
     <Transition appear show={isPostOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -54,22 +58,7 @@ const CreatePost = ({
                   <hr />
                   {/* Select community */}
                   <CommunitySelector />
-                  <form
-                    className=" mt-2"
-                    // onSubmit={() =>
-                    //   void (async () => {
-                    //     const res = await createTweetMutation({
-                    //       title: title,
-                    //       body: body,
-                    //       subredditId: "clcpjm5ys0000npen75a8itww",
-                    //     });
-                    //     const vote = await voteMutation({
-                    //       postId: res.id,
-                    //       newDirection: "UP",
-                    //     });
-                    //   })()
-                    // }
-                  >
+                  <form className=" mt-2">
                     <input
                       type={"text"}
                       className=" w-full rounded-md bg-gray-800 p-2 text-white focus:outline-1 focus:outline-offset-0"
@@ -104,6 +93,7 @@ const CreatePost = ({
                           setTitle("");
                           setBody("");
                           closeModal();
+                          router.prefetch("/");
                         })()
                       }
                     >
