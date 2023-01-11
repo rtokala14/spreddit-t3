@@ -103,9 +103,9 @@ const Post = ({
   });
 
   return (
-    <div className=" flex w-full rounded-md border border-primary text-white">
+    <div className=" flex w-full rounded-md border border-primary bg-black text-white">
       {/* Left upvote downvote section */}
-      <div className=" flex h-full w-14 flex-col items-center justify-start rounded-tl-md bg-black p-2">
+      <div className=" flex h-full w-14 flex-grow flex-col items-center justify-start rounded-tl-md bg-black p-2">
         {hasUpvote ? (
           <FaAngleDoubleUp
             size={25}

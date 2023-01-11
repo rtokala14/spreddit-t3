@@ -32,6 +32,11 @@ const config = {
         hostname: "lh3.googleusercontent.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "media.istockphoto.com",
+        port: "",
+      },
     ],
   },
 };

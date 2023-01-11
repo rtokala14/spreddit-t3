@@ -22,7 +22,11 @@ const TopBox = ({
     <div className=" mt-20 flex w-4/5 items-center rounded-md border border-primary bg-gray-900 p-2 text-white lg:w-2/5">
       <Link href={"/"}>
         <Image
-          src={session.data?.user ? session.data.user.image! : ""}
+          src={
+            session.data?.user
+              ? session.data.user.image!
+              : "https://media.istockphoto.com/id/1332100919/vector/man-icon-black-icon-person-symbol.jpg?s=612x612&w=is&k=20&c=3g5FPg9un7Ktq2_TUpKqpnTL9WpSvNB0SzN9RrXSUog="
+          }
           alt={`${
             session.data?.user ? session.data.user.name! : ""
           } profile picture`}
