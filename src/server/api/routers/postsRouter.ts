@@ -10,43 +10,13 @@ export const postsRouter = createTRPCRouter({
         comments: true,
         author: true,
       },
+      orderBy: [
+        {
+          createdAt: "desc",
+        },
+      ],
     });
   }),
-  getSub: publicProcedure
-    .input(
-      z.object({
-        subId: z.string(),
-      })
-    )
-    .query(async ({ ctx, input }) => {
-      const { subId } = input;
-      const { prisma } = ctx;
-
-      const subreddit = prisma.subreddit.findUnique({
-        where: {
-          id: subId,
-        },
-      });
-      return subreddit;
-    }),
-  getUser: publicProcedure
-    .input(
-      z.object({
-        userId: z.string(),
-      })
-    )
-    .query(async ({ ctx, input }) => {
-      const { userId } = input;
-      const { prisma } = ctx;
-
-      const username = prisma.user.findUnique({
-        where: {
-          id: userId,
-        },
-      });
-
-      return username;
-    }),
   upsertVote: protectedProcedure
     .input(
       z.object({
@@ -96,6 +66,37 @@ export const postsRouter = createTRPCRouter({
       const res = prisma.vote.delete({
         where: {
           id: voteID,
+        },
+      });
+
+      return res;
+    }),
+  createTweet: protectedProcedure
+    .input(
+      z.object({
+        title: z.string(),
+        body: z.string(),
+        subredditId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { prisma, session } = ctx;
+      const { title, body, subredditId } = input;
+
+      const res = prisma.post.create({
+        data: {
+          title: title,
+          author: {
+            connect: {
+              id: session.user.id,
+            },
+          },
+          subreddit: {
+            connect: {
+              id: subredditId,
+            },
+          },
+          body: body,
         },
       });
 
