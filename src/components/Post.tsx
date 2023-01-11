@@ -11,6 +11,7 @@ import {
   FaBookmark,
   FaCommentAlt,
   FaShare,
+  FaTrash,
 } from "react-icons/fa";
 import { api } from "../utils/api";
 
@@ -93,6 +94,14 @@ const Post = ({
     })[0]?.id
   );
 
+  const utils = api.useContext();
+
+  const { mutateAsync: deletePost } = api.posts.deletePost.useMutation({
+    onSuccess: async () => {
+      await utils.posts.getAll.invalidate();
+    },
+  });
+
   return (
     <div className=" flex w-full rounded-md border border-primary text-white">
       {/* Left upvote downvote section */}
@@ -170,14 +179,31 @@ const Post = ({
       {/* Main post data */}
       <div className=" flex w-full flex-col gap-2 rounded-r-md bg-gray-900 p-2">
         {/* Top Section (Subreddit, posted by, timestamp) */}
-        <div className=" flex gap-2">
-          <p className=" text-xs font-medium">{`s/${
-            postData.subreddit!.name
-          }`}</p>
-          <p className=" text-xs font-light">{`u/${postData.author.name!}`}</p>
-          <p className=" text-xs font-extralight">
-            {dayjs(postData.createdAt).fromNow()}
-          </p>
+        <div className=" flex items-center justify-between">
+          <div className=" flex gap-2">
+            <p className=" text-xs font-medium">{`s/${
+              postData.subreddit!.name
+            }`}</p>
+            <p className=" text-xs font-light">{`u/${postData.author
+              .name!}`}</p>
+            <p className=" text-xs font-extralight">
+              {dayjs(postData.createdAt).fromNow()}
+            </p>
+          </div>
+          {postData.author.id === session.data?.user?.id ? (
+            <div
+              className=" hover:cursor-pointer"
+              onClick={() =>
+                void (async () => {
+                  await deletePost({ postId: postData.id });
+                })()
+              }
+            >
+              <FaTrash size={13} className=" text-red-400" />
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
         {/* Post Content */}
         <div>

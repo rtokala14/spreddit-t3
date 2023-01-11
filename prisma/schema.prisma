@@ -116,7 +116,7 @@ model Vote {
     direction VoteDirection
     createdAt DateTime?     @default(now())
     user      User          @relation(fields: [userId], references: [id])
-    post      Post?         @relation(name: "PostVotes", fields: [postId], references: [id])
+    post      Post?         @relation(name: "PostVotes", fields: [postId], references: [id], onDelete: Cascade)
     comment   Comment?      @relation(name: "CommentVotes", fields: [commentId], references: [id])
     userId    String
     postId    String
