@@ -103,7 +103,7 @@ const Post = ({
   });
 
   return (
-    <div className=" flex w-full rounded-md border border-primary bg-black text-white">
+    <div className=" flex max-h-fit w-full rounded-md border border-primary bg-black text-white">
       {/* Left upvote downvote section */}
       <div className=" flex h-full w-14 flex-grow flex-col items-center justify-start rounded-tl-md bg-black p-2">
         {hasUpvote ? (
@@ -179,6 +179,7 @@ const Post = ({
       {/* Main post data */}
       <div className=" flex w-full flex-col gap-2 rounded-r-md bg-gray-900 p-2">
         {/* Top Section (Subreddit, posted by, timestamp) */}
+
         <div className=" flex items-center justify-between">
           <div className=" flex gap-2">
             <p className=" text-xs font-medium">{`s/${
