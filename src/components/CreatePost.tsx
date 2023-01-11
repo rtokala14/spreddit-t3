@@ -93,7 +93,7 @@ const CreatePost = ({
                           setTitle("");
                           setBody("");
                           closeModal();
-                          router.prefetch("/");
+                          await router.prefetch("/");
                         })()
                       }
                     >
