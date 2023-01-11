@@ -1,6 +1,4 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { type Post } from "@prisma/client";
-import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 import { api } from "../utils/api";
 import CommunitySelector from "./CommunitySelector";
@@ -16,10 +14,15 @@ const CreatePost = ({
 }) => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const utils = api.useContext();
 
-  const createTweetMutation = api.posts.createTweet.useMutation().mutateAsync;
-  const voteMutation = api.posts.upsertVote.useMutation().mutateAsync;
-  const router = useRouter();
+  const { mutateAsync: createTweetMutation } =
+    api.posts.createTweet.useMutation();
+  const voteMutation = api.posts.upsertVote.useMutation({
+    onSuccess: async () => {
+      await utils.posts.getAll.invalidate();
+    },
+  }).mutateAsync;
 
   return (
     <Transition appear show={isPostOpen} as={Fragment}>
@@ -85,15 +88,15 @@ const CreatePost = ({
                             body: body,
                             subredditId: "clcpjm5ys0000npen75a8itww",
                           });
+                          setTitle("");
+                          setBody("");
+                          closeModal();
                           const vote = await voteMutation({
                             postId: res.id,
                             newDirection: "UP",
                             voteId: "RandomString",
                           });
-                          setTitle("");
-                          setBody("");
-                          closeModal();
-                          await router.prefetch("/");
+                          //   await router.prefetch("/");
                         })()
                       }
                     >
