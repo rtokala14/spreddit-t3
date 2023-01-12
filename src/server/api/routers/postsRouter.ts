@@ -144,4 +144,29 @@ export const postsRouter = createTRPCRouter({
 
       return results;
     }),
+  createSubreddit: protectedProcedure
+    .input(
+      z.object({
+        subName: z.string(),
+        desc: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { prisma, session } = ctx;
+      const { subName, desc } = input;
+
+      const newSub = prisma.subreddit.create({
+        data: {
+          name: subName,
+          description: desc,
+          creator: {
+            connect: {
+              id: session.user.id,
+            },
+          },
+        },
+      });
+
+      return newSub;
+    }),
 });

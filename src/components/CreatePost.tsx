@@ -16,6 +16,7 @@ const CreatePost = ({
   const [body, setBody] = useState("");
   const [selectedCommunity, setSelectedCommunity] = useState("");
   const [subId, setSubId] = useState("");
+  const [error, setError] = useState("");
   const utils = api.useContext();
 
   const { mutateAsync: createTweetMutation } =
@@ -85,7 +86,8 @@ const CreatePost = ({
                   <div className="mt-4 flex justify-end">
                     <button
                       type="submit"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-black hover:bg-lightest focus:outline-none focus-visible:ring-2 focus-visible:ring-lightest focus-visible:ring-offset-2"
+                      disabled={subId && title && body ? false : true}
+                      className="inline-flex justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-black hover:bg-lightest focus:outline-none focus-visible:ring-2 focus-visible:ring-lightest focus-visible:ring-offset-2 disabled:bg-gray-400 disabled:hover:cursor-not-allowed"
                       //   onClick={closeModal}
                       onClick={() =>
                         void (async () => {
