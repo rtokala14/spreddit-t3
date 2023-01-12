@@ -14,6 +14,8 @@ const CreatePost = ({
 }) => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const [selectedCommunity, setSelectedCommunity] = useState("");
+  const [subId, setSubId] = useState("");
   const utils = api.useContext();
 
   const { mutateAsync: createTweetMutation } =
@@ -60,7 +62,11 @@ const CreatePost = ({
                 <div className="mt-2">
                   <hr />
                   {/* Select community */}
-                  <CommunitySelector />
+                  <CommunitySelector
+                    selectedCommunity={selectedCommunity}
+                    setSelectedCommunity={setSelectedCommunity}
+                    setSubId={setSubId}
+                  />
                   <form className=" mt-2">
                     <input
                       type={"text"}
@@ -86,7 +92,7 @@ const CreatePost = ({
                           const res = await createTweetMutation({
                             title: title,
                             body: body,
-                            subredditId: "clcpjm5ys0000npen75a8itww",
+                            subredditId: subId,
                           });
                           setTitle("");
                           setBody("");

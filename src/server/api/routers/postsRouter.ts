@@ -122,4 +122,26 @@ export const postsRouter = createTRPCRouter({
         delPost,
       };
     }),
+  fetchSubreddits: protectedProcedure
+    .input(
+      z.object({
+        subName: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { prisma } = ctx;
+      const { subName } = input;
+
+      const results = prisma.subreddit.findMany({
+        where: {
+          name: {
+            contains: subName,
+            mode: "insensitive",
+          },
+        },
+        take: 5,
+      });
+
+      return results;
+    }),
 });
