@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -37,18 +37,30 @@ const TopBox = ({
       </Link>
       <button
         type="button"
+        disabled={session.data?.user ? false : true}
         onClick={openModal}
-        className=" ml-4 rounded-md bg-primary px-4 py-2 font-medium"
+        className=" ml-4 rounded-md bg-primary px-4 py-2 font-medium disabled:bg-gray-50 disabled:text-black disabled:hover:cursor-not-allowed"
       >
         Create Post
       </button>
       <button
         type="button"
         onClick={openCommModal}
-        className=" ml-4 rounded-md bg-primary px-4 py-2 font-medium"
+        disabled={session.data?.user ? false : true}
+        className=" ml-4 rounded-md bg-primary px-4 py-2 font-medium disabled:bg-gray-50 disabled:text-black disabled:hover:cursor-not-allowed"
       >
         Create Community
       </button>
+      {!session.data?.user ? (
+        <button
+          onClick={async () => await signIn()}
+          className="  ml-4 rounded-md bg-primary px-4 py-2 font-medium"
+        >
+          Login to create a post/community
+        </button>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
