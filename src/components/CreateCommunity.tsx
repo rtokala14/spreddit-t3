@@ -1,16 +1,10 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import { useGlobalContext } from "../contexts";
 import { api } from "../utils/api";
 
-const CreateCommunity = ({
-  isCommOpen,
-  openCommModal,
-  closeCommModal,
-}: {
-  isCommOpen: boolean;
-  openCommModal: () => void;
-  closeCommModal: () => void;
-}) => {
+const CreateCommunity = () => {
+  const { isCommOpen, closeCommModal } = useGlobalContext();
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
 

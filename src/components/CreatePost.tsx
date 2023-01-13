@@ -1,17 +1,11 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import { useGlobalContext } from "../contexts";
 import { api } from "../utils/api";
 import CommunitySelector from "./CommunitySelector";
 
-const CreatePost = ({
-  isPostOpen,
-  openModal,
-  closeModal,
-}: {
-  isPostOpen: boolean;
-  openModal: () => void;
-  closeModal: () => void;
-}) => {
+const CreatePost = () => {
+  const { isPostOpen, closeModal } = useGlobalContext();
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [selectedCommunity, setSelectedCommunity] = useState("");

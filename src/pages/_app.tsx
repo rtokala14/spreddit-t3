@@ -6,15 +6,26 @@ import { Analytics } from "@vercel/analytics/react";
 import { api } from "../utils/api";
 
 import "../styles/globals.css";
+import { NavBar } from "../components/NavBar";
+import CreatePost from "../components/CreatePost";
+import CreateCommunity from "../components/CreateCommunity";
+import { useState } from "react";
+import Head from "next/head";
+import Layout from "../components/Layout";
+import { GlobalContextProvider } from "../contexts/globalContext";
 
-const MyApp: AppType<{ session: Session | null }> = ({
+export const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
   return (
     <SessionProvider session={session}>
-      <Component {...pageProps} />
-      <Analytics />
+      <GlobalContextProvider>
+        <Layout>
+          <Component {...pageProps} />
+          <Analytics />
+        </Layout>
+      </GlobalContextProvider>
     </SessionProvider>
   );
 };

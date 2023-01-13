@@ -1,25 +1,13 @@
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useGlobalContext } from "../contexts";
 
-const TopBox = ({
-  isPostOpen,
-  openModal,
-  closeModal,
-  isCommOpen,
-  openCommModal,
-  closeCommModal,
-}: {
-  isPostOpen: boolean;
-  openModal: () => void;
-  closeModal: () => void;
-  isCommOpen: boolean;
-  openCommModal: () => void;
-  closeCommModal: () => void;
-}) => {
+const TopBox = () => {
+  const { openModal, openCommModal } = useGlobalContext();
   const session = useSession();
   return (
-    <div className=" mt-20 flex w-4/5 items-center rounded-md border border-primary bg-gray-900 p-2 text-white lg:w-2/5">
+    <div className=" flex w-4/5 items-center rounded-md border border-primary bg-gray-900 p-2 text-white lg:w-2/5">
       <Link href={"/"}>
         <Image
           src={

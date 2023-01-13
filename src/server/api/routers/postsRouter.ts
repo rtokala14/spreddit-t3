@@ -169,4 +169,28 @@ export const postsRouter = createTRPCRouter({
 
       return newSub;
     }),
+  getPost: publicProcedure
+    .input(
+      z.object({
+        postId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { prisma } = ctx;
+      const { postId } = input;
+
+      const res = prisma.post.findUnique({
+        where: {
+          id: postId,
+        },
+        include: {
+          subreddit: true,
+          comments: true,
+          author: true,
+          votes: true,
+        },
+      });
+
+      return res;
+    }),
 });

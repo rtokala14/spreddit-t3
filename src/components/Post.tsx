@@ -20,6 +20,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocal from "dayjs/plugin/updateLocale";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
+import Link from "next/link";
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocal);
 dayjs.updateLocale("en", {
@@ -103,7 +104,10 @@ const Post = ({
   });
 
   return (
-    <div className=" flex max-h-fit w-full rounded-md border border-primary bg-black text-white">
+    <Link
+      href={`/posts/${postData.id}`}
+      className=" flex max-h-fit w-full rounded-md border border-primary bg-black text-white hover:border-lighter"
+    >
       {/* Left upvote downvote section */}
       <div className=" flex h-full w-14 flex-grow flex-col items-center justify-start rounded-tl-md bg-black p-2">
         {hasUpvote ? (
@@ -229,7 +233,7 @@ const Post = ({
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
