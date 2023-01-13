@@ -13,7 +13,7 @@ const PostPage: NextPage = () => {
     postId: router.query.post ? router.query.post.toString()! : "",
   });
   return (
-    <div className=" text-white">
+    <div className=" w-4/5 text-white">
       {post && !isLoading && <Post postData={post} />}
     </div>
   );

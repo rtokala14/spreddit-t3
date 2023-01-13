@@ -14,6 +14,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           content="A clone of Reddit by Rohit Reddy Tokala"
         />
         <link rel="icon" href="/favicon.ico" />
+        <meta
+          name="google-site-verification"
+          content="-E-sds6B71XXlLSom-XlN8BKu8cKF6oCAJHxzmSFRpU"
+        />
       </Head>
       <div className="flex min-h-screen w-full flex-col items-center  bg-gradient-to-br from-[#000000] to-[#232327]">
         <NavBar />
