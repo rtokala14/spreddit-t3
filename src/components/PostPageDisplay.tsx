@@ -10,6 +10,7 @@ import updateLocal from "dayjs/plugin/updateLocale";
 
 import dayjs from "dayjs";
 import CommentForm from "./CommentForm";
+import Comments from "./Comments";
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocal);
 dayjs.updateLocale("en", {
@@ -186,6 +187,8 @@ const PostPageDisplay = ({
         </div>
       </div>
       <CommentForm id={postData.id} />
+      <hr className=" mx-4 border-primary" />
+      <Comments postId={postData.id} />
     </div>
   );
 };

@@ -247,4 +247,19 @@ export const postsRouter = createTRPCRouter({
 
       return res;
     }),
+  getComments: publicProcedure
+    .input(z.object({ postId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const { prisma } = ctx;
+      const { postId } = input;
+      const res = prisma.comment.findMany({
+        where: { postId: postId },
+        include: {
+          author: true,
+          replies: true,
+          Vote: true,
+        },
+      });
+      return res;
+    }),
 });
