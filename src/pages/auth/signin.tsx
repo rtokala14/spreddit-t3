@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FaReddit } from "react-icons/fa";
+import { api } from "../../utils/api";
 
 const SignIn = ({
   providers,
@@ -23,7 +24,7 @@ const SignIn = ({
 }) => {
   const route = useRouter();
   return (
-    <div className=" flex min-h-screen flex-col items-center justify-center gap-3 bg-lightest">
+    <div className=" absolute top-0 flex h-screen w-full flex-col items-center justify-center gap-3 bg-lightest">
       <Link href={"/"} className=" flex gap-2">
         <FaReddit className=" text-primary" size={40} />
         <h1 className=" text-3xl font-semibold text-primary">Spreddit</h1>
@@ -62,25 +63,28 @@ const SignIn = ({
           </span>
         </div>
         {providers &&
-          Object.values(providers).map((provider) => (
-            <div
-              className=" rounded-sm border border-primary bg-primary p-2 text-white hover:cursor-pointer hover:bg-lighter hover:text-black"
-              key={provider.name}
-            >
-              <button
-                className=" w-full text-center"
-                // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                onClick={async () => {
-                  await signIn(provider.id, {
-                    redirect: true,
-                    callbackUrl: route.query.callbackUrl?.toString(),
-                  });
-                }}
-              >
-                Sign in with {provider.name}
-              </button>
-            </div>
-          ))}
+          Object.values(providers).map(
+            (provider) =>
+              provider.name !== "Email" && (
+                <div
+                  className=" rounded-sm border border-primary bg-primary p-2 text-white hover:cursor-pointer hover:bg-lighter hover:text-black"
+                  key={provider.name}
+                >
+                  <button
+                    className=" w-full text-center"
+                    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                    onClick={async () => {
+                      const res = await signIn(provider.id, {
+                        redirect: true,
+                        callbackUrl: route.query.callbackUrl?.toString(),
+                      });
+                    }}
+                  >
+                    Sign in with {provider.name}
+                  </button>
+                </div>
+              )
+          )}
       </div>
     </div>
   );

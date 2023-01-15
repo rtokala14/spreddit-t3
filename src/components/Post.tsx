@@ -104,8 +104,8 @@ const Post = ({
   });
 
   return (
-    <Link
-      href={`/posts/${postData.id}`}
+    <div
+      // href={`/posts/${postData.id}`}
       className=" flex max-h-fit w-full rounded-md border border-primary bg-black text-white hover:border-lighter"
     >
       {/* Left upvote downvote section */}
@@ -181,7 +181,10 @@ const Post = ({
         )}
       </div>
       {/* Main post data */}
-      <div className=" flex w-full flex-col gap-2 rounded-r-md bg-gray-900 p-2">
+      <Link
+        href={`/posts/${postData.id}`}
+        className=" flex w-full flex-col gap-2 rounded-r-md bg-gray-900 p-2"
+      >
         {/* Top Section (Subreddit, posted by, timestamp) */}
 
         <div className=" flex items-center justify-between">
@@ -235,8 +238,8 @@ const Post = ({
             <FaShare size={17} className="text-gray-100" />
           </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };
 
