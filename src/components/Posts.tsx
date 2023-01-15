@@ -2,7 +2,7 @@ import { api } from "../utils/api";
 import Post from "./Post";
 
 const Posts = () => {
-  const { data: posts, isLoading } = api.posts.getAll.useQuery();
+  const { data: posts, isLoading } = api.posts.getAll.useQuery({});
 
   const loadingArray = [1, 2, 3, 4, 5, 6, 7, 8];
 

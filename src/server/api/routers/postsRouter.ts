@@ -2,21 +2,43 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const postsRouter = createTRPCRouter({
-  getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.post.findMany({
-      include: {
-        subreddit: true,
-        votes: true,
-        comments: true,
-        author: true,
-      },
-      orderBy: [
-        {
-          createdAt: "desc",
+  getAll: publicProcedure
+    .input(
+      z.object({
+        where: z
+          .object({
+            author: z
+              .object({
+                id: z.string().optional(),
+              })
+              .optional(),
+            subreddit: z
+              .object({
+                id: z.string().optional(),
+              })
+              .optional(),
+          })
+          .optional(),
+        // .optional(),
+      })
+    )
+    .query(({ ctx, input }) => {
+      const { where } = input;
+      return ctx.prisma.post.findMany({
+        where,
+        include: {
+          subreddit: true,
+          votes: true,
+          comments: true,
+          author: true,
         },
-      ],
-    });
-  }),
+        orderBy: [
+          {
+            createdAt: "desc",
+          },
+        ],
+      });
+    }),
   upsertVote: protectedProcedure
     .input(
       z.object({

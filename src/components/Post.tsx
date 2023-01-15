@@ -186,11 +186,14 @@ const Post = ({
 
         <div className=" flex items-center justify-between">
           <div className=" flex gap-2">
-            <p className=" text-xs font-medium">{`s/${
-              postData.subreddit!.name
-            }`}</p>
-            <p className=" text-xs font-light">{`u/${postData.author
-              .name!}`}</p>
+            <Link
+              href={`/community/${postData.subredditId}`}
+              className=" text-xs font-medium hover:underline"
+            >{`s/${postData.subreddit!.name}`}</Link>
+            <Link
+              href={`/user/${postData.userId}`}
+              className=" text-xs font-light hover:underline"
+            >{`u/${postData.author.name!}`}</Link>
             <p className=" text-xs font-extralight">
               {dayjs(postData.createdAt).fromNow()}
             </p>
