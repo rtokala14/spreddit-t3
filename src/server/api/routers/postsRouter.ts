@@ -7,16 +7,8 @@ export const postsRouter = createTRPCRouter({
       z.object({
         where: z
           .object({
-            author: z
-              .object({
-                id: z.string().optional(),
-              })
-              .optional(),
-            subreddit: z
-              .object({
-                id: z.string().optional(),
-              })
-              .optional(),
+            userId: z.string().optional(),
+            subredditId: z.string().optional(),
           })
           .optional(),
         // .optional(),

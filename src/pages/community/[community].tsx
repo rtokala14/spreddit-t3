@@ -1,9 +1,17 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
+import Posts from "../../components/Posts";
 
 const Community: NextPage = () => {
   const router = useRouter();
-  return <div className=" text-white">{router.query.community}</div>;
+  const commId = router.query.community as string;
+  return (
+    <Posts
+      where={{
+        subredditId: commId,
+      }}
+    />
+  );
 };
 
 export default Community;

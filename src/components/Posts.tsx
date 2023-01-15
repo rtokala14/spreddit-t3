@@ -1,8 +1,12 @@
-import { api } from "../utils/api";
+import { api, RouterInputs } from "../utils/api";
 import Post from "./Post";
 
-const Posts = () => {
-  const { data: posts, isLoading } = api.posts.getAll.useQuery({});
+const Posts = ({
+  where = {},
+}: {
+  where?: RouterInputs["posts"]["getAll"]["where"];
+}) => {
+  const { data: posts, isLoading } = api.posts.getAll.useQuery({ where });
 
   const loadingArray = [1, 2, 3, 4, 5, 6, 7, 8];
 
