@@ -24,10 +24,6 @@ export const NavBar: React.FC = () => {
   const [enabled, setEnabled] = useState(false);
   return (
     <>
-      <link
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-        rel="stylesheet"
-      />
       <nav className=" fixed top-0 z-50 flex h-14 w-full flex-row items-center justify-start gap-0 bg-black pt-1 text-white shadow-sm shadow-lightest md:gap-2">
         {/* Icon + Logo */}
         <Link
@@ -78,7 +74,7 @@ export const NavBar: React.FC = () => {
         {/* Search Bar */}
         <input
           type="text"
-          placeholder="&#xF002; Search"
+          placeholder=" Search"
           className=" min-w-fit max-w-4xl flex-grow appearance-none rounded-3xl border-2 border-gray-700 bg-transparent p-2 pl-4 text-white focus:border-lighter focus:outline-none"
           style={{
             fontFamily: "Arial, FontAwesome",
