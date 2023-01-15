@@ -8,7 +8,7 @@ const TopBox = () => {
   const session = useSession();
   return (
     <div className=" flex w-4/5 items-center rounded-md border border-primary bg-gray-900 p-2 text-white lg:w-2/5">
-      <Link href={"/"}>
+      <Link href={`/user/${session.data?.user?.id}`}>
         <Image
           src={
             session.data?.user
