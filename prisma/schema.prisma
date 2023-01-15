@@ -92,12 +92,12 @@ model Comment {
     body          String
     createdAt     DateTime  @default(now())
     author        User      @relation(name: "UserComments", fields: [userId], references: [id])
-    post          Post      @relation(name: "PostComments", fields: [postId], references: [id])
-    parentComment Comment   @relation(name: "CommentReplies", fields: [commentId], references: [id])
+    post          Post      @relation(name: "PostComments", fields: [postId], references: [id], onDelete: Cascade)
+    parentComment Comment?  @relation(name: "CommentReplies", fields: [commentId], references: [id])
     userId        String
     postId        String
     replies       Comment[] @relation(name: "CommentReplies")
-    commentId     String
+    commentId     String?
     Vote          Vote[]    @relation(name: "CommentVotes")
 }
 

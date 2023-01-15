@@ -21,7 +21,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </Head>
       <div className="flex min-h-screen w-full flex-col items-center  bg-gradient-to-br from-[#000000] to-[#232327]">
         <NavBar />
-        <main className=" mt-20 flex w-full flex-col items-center">
+        <main className=" mt-16 flex min-h-screen w-full flex-col items-center">
           {children}
         </main>
         {/* Create Post */}

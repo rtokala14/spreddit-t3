@@ -1,7 +1,9 @@
 import { NextPage } from "next";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import Post from "../../components/Post";
 import { api } from "../../utils/api";
+
+import PostPageDisplay from "../../components/PostPageDisplay";
 
 const PostPage: NextPage = () => {
   const router = useRouter();
@@ -9,12 +11,19 @@ const PostPage: NextPage = () => {
   //   console.log(router.query.post);
   //   console.log(page);
 
-  const { data: post, isLoading } = api.posts.getPost.useQuery({
+  const session = useSession();
+
+  const { data: postData, isLoading } = api.posts.getPost.useQuery({
     postId: router.query.post ? router.query.post.toString()! : "",
   });
+
   return (
-    <div className=" w-4/5 text-white">
-      {post && !isLoading && <Post postData={post} />}
+    <div className=" flex h-screen w-4/5 flex-col border-x border-primary p-2 text-white lg:w-3/5">
+      {isLoading ? (
+        <div></div>
+      ) : (
+        postData && <PostPageDisplay postData={postData} />
+      )}
     </div>
   );
 };
