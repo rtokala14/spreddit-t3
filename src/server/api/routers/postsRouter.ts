@@ -224,10 +224,16 @@ export const postsRouter = createTRPCRouter({
       return res;
     }),
   createCommentPost: protectedProcedure
-    .input(z.object({ body: z.string(), postId: z.string() }))
+    .input(
+      z.object({
+        body: z.string(),
+        postId: z.string(),
+        commId: z.string().optional(),
+      })
+    )
     .mutation(async ({ ctx, input }) => {
       const { prisma, session } = ctx;
-      const { body, postId } = input;
+      const { body, postId, commId } = input;
 
       const res = prisma.comment.create({
         data: {
@@ -253,13 +259,69 @@ export const postsRouter = createTRPCRouter({
       const { prisma } = ctx;
       const { postId } = input;
       const res = prisma.comment.findMany({
-        where: { postId: postId },
+        where: {
+          postId: postId,
+          commentId: null,
+        },
         include: {
           author: true,
           replies: true,
           Vote: true,
         },
       });
+      return res;
+    }),
+  getReplies: publicProcedure
+    .input(
+      z.object({
+        commId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { prisma } = ctx;
+      const { commId } = input;
+
+      const res = prisma.comment.findMany({
+        where: {
+          parentComment: {
+            id: commId,
+          },
+        },
+        include: {
+          author: true,
+          replies: true,
+          Vote: true,
+        },
+      });
+
+      return res;
+    }),
+  addReply: protectedProcedure
+    .input(
+      z.object({
+        parentId: z.string(),
+        childId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { prisma } = ctx;
+      const { parentId, childId } = input;
+
+      const res = prisma.comment.update({
+        where: {
+          id: parentId,
+        },
+        data: {
+          replies: {
+            connect: [
+              {
+                id: childId,
+              },
+            ],
+          },
+        },
+      });
+
       return res;
     }),
 });

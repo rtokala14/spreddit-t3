@@ -6,6 +6,10 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocal from "dayjs/plugin/updateLocale";
 
 import dayjs from "dayjs";
+import { FaAngleDoubleDown, FaAngleDoubleUp, FaComment } from "react-icons/fa";
+import { useState } from "react";
+import CommentForm from "./CommentForm";
+import { api } from "../utils/api";
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocal);
 dayjs.updateLocale("en", {
@@ -35,6 +39,10 @@ const Comment = ({
     replies: Comment[];
   };
 }) => {
+  const [addComment, setAddComment] = useState(false);
+  const { data: replies } = api.posts.getReplies.useQuery({
+    commId: commentData.id,
+  });
   return (
     <div className=" flex flex-col gap-2">
       {/* Top section */}
@@ -63,11 +71,36 @@ const Comment = ({
         </p>
       </div>
       {/* Main Content */}
-      <div className=" ml-4 border-l border-l-primary pl-8">
+      <div className=" ml-4 flex flex-col gap-2 border-l border-l-primary pl-7 ">
         {/* Body of the comment */}
-        <div>{commentData.body}</div>
+        <div className=" font-light">{commentData.body}</div>
         {/* Votes, comments, Create, etc */}
-        <div></div>
+        <div className=" flex items-center gap-3">
+          <FaAngleDoubleUp />
+          <p>0</p>
+          <FaAngleDoubleDown />
+          <div
+            onClick={() =>
+              addComment ? setAddComment(false) : setAddComment(true)
+            }
+            className=" flex items-center gap-1 rounded-md py-1 px-2 hover:cursor-pointer hover:bg-gray-800"
+          >
+            <FaComment />
+            <p>Reply</p>
+          </div>
+        </div>
+        {addComment ? (
+          <CommentForm
+            id={commentData.postId}
+            commId={commentData.id}
+            setAddComment={setAddComment}
+          />
+        ) : (
+          <></>
+        )}
+        {replies?.map((reply) => (
+          <Comment key={reply.id} commentData={reply} />
+        ))}
       </div>
     </div>
   );

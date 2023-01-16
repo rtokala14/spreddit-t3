@@ -89,7 +89,7 @@ const PostPageDisplay = ({
       })[0]?.id
   );
   return (
-    <div className=" flex flex-col gap-3  rounded-md border border-primary bg-gray-900 p-2">
+    <div className=" flex min-h-screen flex-col gap-3  rounded-md border border-primary bg-gray-900 p-2">
       <div className=" flex  ">
         {/* Left bar */}
         <div className=" flex flex-col items-center justify-start border-r border-primary pr-2">

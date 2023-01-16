@@ -6,7 +6,7 @@ const Comments = ({ postId }: { postId: string }) => {
     postId: postId,
   });
   return (
-    <div className=" p-2">
+    <div className=" flex flex-col gap-2 p-2">
       {comments?.map((comment) => (
         <Comment commentData={comment} key={comment.id} />
       ))}
