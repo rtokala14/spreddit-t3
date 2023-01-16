@@ -18,7 +18,7 @@ const PostPage: NextPage = () => {
   });
 
   return (
-    <div className=" flex min-h-screen w-4/5 flex-grow flex-col p-2 text-white lg:w-3/5">
+    <div className=" flex min-h-screen w-full flex-grow flex-col p-2 text-white md:w-4/5 lg:w-3/5">
       {isLoading ? (
         <div></div>
       ) : (

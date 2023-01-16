@@ -1,6 +1,6 @@
 import { Menu, Switch } from "@headlessui/react";
 
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -8,14 +8,10 @@ import {
   FaReddit,
   FaPlus,
   FaAngleDown,
-  FaHome,
-  FaComment,
-  FaBell,
   FaGithub,
   FaUser,
   FaSignOutAlt,
   FaUserCog,
-  FaSignInAlt,
 } from "react-icons/fa";
 
 export const NavBar: React.FC = () => {
@@ -24,7 +20,7 @@ export const NavBar: React.FC = () => {
   const [enabled, setEnabled] = useState(false);
   return (
     <>
-      <nav className=" fixed top-0 z-50 flex h-14 w-full flex-row items-center justify-start gap-0 bg-black pt-1 text-white shadow-sm shadow-lightest md:gap-2">
+      <nav className=" fixed top-0 z-50 flex h-14 w-full flex-row items-center justify-between gap-2 bg-black pt-1 text-white shadow-sm shadow-lightest md:gap-2">
         {/* Icon + Logo */}
         <Link
           href={"/"}
@@ -36,7 +32,7 @@ export const NavBar: React.FC = () => {
           </h1>
         </Link>
         {/* Dropdown */}
-        <Menu>
+        {/* <Menu>
           <Menu.Button className={"relative hidden sm:block "}>
             <div className=" ui-active:border-lighter flex  w-20 items-center justify-between gap-2 rounded-lg border-lighter pb-1 pl-2 pr-2 hover:border lg:w-52">
               <FaHome size={25} />
@@ -46,7 +42,7 @@ export const NavBar: React.FC = () => {
           </Menu.Button>
           <Menu.Items
             className={
-              "absolute top-16 mt-2 w-fit origin-top-right rounded-lg border border-lighter bg-black p-2 shadow-lg ring-1  ring-black ring-opacity-5 focus:outline-none md:left-20 lg:left-52"
+              "absolute top-12 mt-2 w-fit origin-top-right rounded-lg border border-lighter bg-black p-2 shadow-lg ring-1  ring-black ring-opacity-5 focus:outline-none md:left-20 lg:left-52"
             }
           >
             <Menu.Item>
@@ -70,7 +66,7 @@ export const NavBar: React.FC = () => {
               )}
             </Menu.Item>
           </Menu.Items>
-        </Menu>
+        </Menu> */}
         {/* Search Bar */}
         <input
           type="text"
@@ -81,8 +77,8 @@ export const NavBar: React.FC = () => {
           }}
         />
         {/* Util Icons */}
-        <div className=" flex max-w-2xl flex-grow justify-end gap-3">
-          {session ? (
+        <div className=" flex justify-end gap-3">
+          {/* {session ? (
             <div className=" ml-3 mr-2 flex items-center justify-center gap-2">
               <FaComment size={25} className=" hover:text-lighter" />
               <FaBell size={25} className=" hover:text-lighter" />
@@ -114,11 +110,11 @@ export const NavBar: React.FC = () => {
                 <h3>Login</h3>
               </button>
             </div>
-          )}
+          )} */}
           {/* Settings dropdown */}
           <Menu>
             <Menu.Button className={"relative"}>
-              <div className=" ui-active:border-lighter flex max-h-11  w-20 items-center justify-between gap-2 rounded-lg border-lighter pb-1 pl-2 pr-2 hover:border lg:w-52">
+              <div className=" ui-active:border-lighter flex max-h-11 items-center justify-between gap-2 rounded-lg border-lighter pb-1 hover:border">
                 {session ? (
                   <Image
                     src={session.user!.image!}
@@ -138,7 +134,7 @@ export const NavBar: React.FC = () => {
             </Menu.Button>
             <Menu.Items
               className={
-                " absolute top-16 right-0 mt-2 w-fit origin-top-right rounded-lg border border-lighter bg-black p-2 shadow-lg  ring-1 ring-black ring-opacity-5 focus:outline-none"
+                " absolute top-12 right-0 mt-2 w-fit origin-top-right rounded-lg border border-lighter bg-black p-2 shadow-lg  ring-1 ring-black ring-opacity-5 focus:outline-none"
               }
             >
               {session ? (

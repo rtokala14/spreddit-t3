@@ -11,7 +11,7 @@ const Posts = ({
   const loadingArray = [1, 2, 3, 4, 5, 6, 7, 8];
 
   return (
-    <div className=" mt-4 flex h-3/4 w-4/5 flex-col gap-3 p-3 lg:w-2/5">
+    <div className=" mt-4 flex h-3/4 w-full flex-col gap-3 p-3 md:w-4/5 lg:w-2/5">
       {isLoading
         ? loadingArray.map((ele) => (
             <div
