@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import { api } from "../../utils/api";
 
 import PostPageDisplay from "../../components/PostPageDisplay";
+import { FaAngleDoubleDown, FaAngleDoubleUp } from "react-icons/fa";
+import CommentForm from "../../components/CommentForm";
 
 const PostPage: NextPage = () => {
   const router = useRouter();
@@ -20,7 +22,27 @@ const PostPage: NextPage = () => {
   return (
     <div className=" flex min-h-screen w-full flex-grow flex-col p-2 text-white md:w-4/5 lg:w-3/5">
       {isLoading ? (
-        <div></div>
+        <div className=" flex min-h-screen animate-pulse flex-col gap-3  rounded-md border border-primary bg-gray-900 p-2">
+          <div className=" flex  ">
+            {/* Left bar */}
+            <div className=" flex flex-col items-center justify-start border-r border-primary pr-2">
+              <FaAngleDoubleUp
+                size={25}
+                className="text-primary hover:cursor-pointer"
+              />
+              <p>0</p>
+              <FaAngleDoubleDown
+                size={25}
+                className="text-primary hover:cursor-pointer"
+              />
+            </div>
+            {/* Main Content */}
+            <div className=" flex h-24 w-full flex-col gap-2"></div>
+            {/* Top Content */}
+          </div>
+          <CommentForm id={"mlg"} />
+          <hr className=" mx-4 border-primary" />
+        </div>
       ) : (
         postData && <PostPageDisplay postData={postData} />
       )}
