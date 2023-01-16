@@ -13,9 +13,11 @@ import {
   FaSignOutAlt,
   FaUserCog,
 } from "react-icons/fa";
+import { useGlobalContext } from "../contexts";
 
 export const NavBar: React.FC = () => {
   const { data: session } = useSession();
+  const { openModal, openCommModal } = useGlobalContext();
   // TODO change to adapt dark mode
   const [enabled, setEnabled] = useState(false);
   return (
@@ -114,7 +116,7 @@ export const NavBar: React.FC = () => {
           {/* Settings dropdown */}
           <Menu>
             <Menu.Button className={"relative"}>
-              <div className=" ui-active:border-lighter flex max-h-11 items-center justify-between gap-2 rounded-lg border-lighter pb-1 hover:border">
+              <div className=" ui-active:border-lighter flex max-h-11 items-center justify-between gap-2 rounded-lg border-lighter p-2 hover:border">
                 {session ? (
                   <Image
                     src={session.user!.image!}
@@ -141,12 +143,13 @@ export const NavBar: React.FC = () => {
                 <>
                   <Menu.Item>
                     {({ active }) => (
-                      <div
+                      <Link
+                        href={`/user/${session.user?.id}`}
                         className={`${"flex  w-full items-center justify-start gap-3 rounded-md border border-transparent p-2 hover:cursor-pointer hover:border-lighter "}`}
                       >
                         <FaUser size={20} className=" text-lighter" />
                         <h2 className=" text-md">User Profile</h2>
-                      </div>
+                      </Link>
                     )}
                   </Menu.Item>
                   <Menu.Item>
@@ -162,6 +165,7 @@ export const NavBar: React.FC = () => {
                   <Menu.Item>
                     {({ active }) => (
                       <div
+                        onClick={openCommModal}
                         className={`${"flex  w-full items-center justify-start gap-3 rounded-md border border-transparent p-2 hover:cursor-pointer hover:border-lighter "}`}
                       >
                         <FaPlus size={20} className=" text-lighter" />
@@ -172,6 +176,7 @@ export const NavBar: React.FC = () => {
                   <Menu.Item>
                     {({ active }) => (
                       <div
+                        onClick={openModal}
                         className={`${"flex  w-full items-center justify-start gap-3 rounded-md border border-transparent p-2 hover:cursor-pointer hover:border-lighter "}`}
                       >
                         <FaPlus size={20} className=" text-lighter" />
