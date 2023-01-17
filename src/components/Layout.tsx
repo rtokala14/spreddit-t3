@@ -1,10 +1,13 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 import React from "react";
 import CreateCommunity from "./CreateCommunity";
 import CreatePost from "./CreatePost";
 import { NavBar } from "./NavBar";
+import SpeedDial from "./SpeedDial";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
   return (
     <>
       <Head>
@@ -29,6 +32,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
         {/* Create Community */}
         <CreateCommunity />
+        <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+        {/* Speed Dial on pages not homepage */}
+        {router.pathname !== "/" ? <SpeedDial /> : <></>}
       </div>
     </>
   );
