@@ -1,10 +1,12 @@
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { useGlobalContext } from "../contexts";
 
 const SpeedDial = () => {
   const { data: session } = useSession();
+  const router = useRouter();
   const { openCommModal, openModal } = useGlobalContext();
-  return session ? (
+  return session && router.pathname !== "/" ? (
     <div className=" group fixed right-6 bottom-6 flex flex-col">
       <div className="mb-4 hidden flex-col space-y-2 group-hover:flex">
         <button
