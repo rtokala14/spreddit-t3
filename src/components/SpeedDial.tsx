@@ -9,7 +9,7 @@ const SpeedDial = () => {
       <div className="mb-4 hidden flex-col space-y-2 group-hover:flex">
         <button
           type="button"
-          onClick={() => openCommModal}
+          onClick={openCommModal}
           className=" flex  items-center justify-center rounded-lg border border-primary bg-primary p-2 text-black hover:bg-black hover:text-primary"
         >
           Create Community
@@ -17,7 +17,7 @@ const SpeedDial = () => {
         </button>
         <button
           type="button"
-          onClick={() => openModal}
+          onClick={openModal}
           className=" flex  items-center justify-center rounded-lg border border-primary bg-primary p-2 text-black hover:bg-black hover:text-primary"
         >
           Create Post
