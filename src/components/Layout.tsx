@@ -30,7 +30,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
         {/* Create Community */}
         <CreateCommunity />
-        <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
         {/* Speed Dial on pages not homepage */}
         <SpeedDial />
       </div>
