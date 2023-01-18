@@ -324,4 +324,27 @@ export const postsRouter = createTRPCRouter({
 
       return res;
     }),
+  getUser: publicProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { prisma } = ctx;
+      const { userId } = input;
+
+      const res = prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+        include: {
+          accounts: true,
+          posts: true,
+          comments: true,
+        },
+      });
+
+      return res;
+    }),
 });
