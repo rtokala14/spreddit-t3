@@ -82,7 +82,7 @@ const CommentForm = ({
             })()
           }
         >
-          Comment
+          {commId ? "Reply" : "Comment"}
         </button>
       </div>
     </div>
