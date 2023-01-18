@@ -229,8 +229,9 @@ const Post = ({
         {/* Post actions */}
         <div className=" mt-2 flex justify-evenly">
           {/* Comments */}
-          <div>
+          <div className=" flex items-center gap-2">
             <FaCommentAlt size={17} className="text-gray-100" />
+            <p>{postData.comments.length}</p>
           </div>
           {/* Bookmark */}
           <div>
