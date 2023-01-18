@@ -184,6 +184,9 @@ const Post = ({
       <Link
         href={`/posts/${postData.id}`}
         className=" flex w-full flex-col gap-2 rounded-r-md bg-gray-900 p-2"
+        onClick={() => {
+          utils.posts.getPost.setData({ postId: postData.id }, postData);
+        }}
       >
         {/* Top Section (Subreddit, posted by, timestamp) */}
 

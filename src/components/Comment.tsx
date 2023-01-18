@@ -50,8 +50,8 @@ const Comment = ({
         <Link href={`/user/${commentData.userId}`}>
           <Image
             src={
-              commentData
-                ? commentData.author.image!
+              commentData.author.image
+                ? commentData.author.image
                 : "https://media.istockphoto.com/id/1332100919/vector/man-icon-black-icon-person-symbol.jpg?s=612x612&w=is&k=20&c=3g5FPg9un7Ktq2_TUpKqpnTL9WpSvNB0SzN9RrXSUog="
             }
             alt={`${
