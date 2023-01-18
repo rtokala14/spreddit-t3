@@ -7,9 +7,13 @@ const Comments = ({ postId }: { postId: string }) => {
   });
   return (
     <div className=" flex flex-col gap-2 p-2">
-      {comments?.map((comment) => (
-        <Comment commentData={comment} key={comment.id} />
-      ))}
+      {isLoading ? (
+        <div className=" animate-pulse text-gray-500">Loading...</div>
+      ) : (
+        comments?.map((comment) => (
+          <Comment commentData={comment} key={comment.id} />
+        ))
+      )}
     </div>
   );
 };

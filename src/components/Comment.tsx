@@ -40,10 +40,12 @@ const Comment = ({
   };
 }) => {
   const [addComment, setAddComment] = useState(false);
-  const { data: replies } = api.posts.getReplies.useQuery({
+  const { data: replies, isLoading } = api.posts.getReplies.useQuery({
     commId: commentData.id,
   });
-  return (
+  return isLoading ? (
+    <div className=" animate-pulse text-gray-500">Loading...</div>
+  ) : (
     <div className=" flex flex-col gap-2">
       {/* Top section */}
       <div className=" flex items-center gap-3">
