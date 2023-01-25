@@ -353,4 +353,25 @@ export const postsRouter = createTRPCRouter({
 
       return res;
     }),
+  getSub: publicProcedure
+    .input(
+      z.object({
+        commId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { prisma } = ctx;
+      const { commId } = input;
+
+      const res = prisma.subreddit.findUnique({
+        where: {
+          id: commId,
+        },
+        include: {
+          posts: true,
+        },
+      });
+
+      return res;
+    }),
 });
