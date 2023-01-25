@@ -20,8 +20,8 @@ const User = () => {
               src={
                 isLoading
                   ? "https://media.istockphoto.com/id/1332100919/vector/man-icon-black-icon-person-symbol.jpg?s=612x612&w=is&k=20&c=3g5FPg9un7Ktq2_TUpKqpnTL9WpSvNB0SzN9RrXSUog="
-                  : userData
-                  ? userData?.image!
+                  : userData?.image
+                  ? userData?.image
                   : "https://media.istockphoto.com/id/1332100919/vector/man-icon-black-icon-person-symbol.jpg?s=612x612&w=is&k=20&c=3g5FPg9un7Ktq2_TUpKqpnTL9WpSvNB0SzN9RrXSUog="
               }
               alt={`${userData?.name}'s profile picture`}
