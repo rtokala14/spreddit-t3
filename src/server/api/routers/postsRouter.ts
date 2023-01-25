@@ -112,6 +112,12 @@ export const postsRouter = createTRPCRouter({
           },
           body: body,
         },
+        include: {
+          subreddit: true,
+          comments: true,
+          votes: true,
+          author: true,
+        },
       });
 
       return res;

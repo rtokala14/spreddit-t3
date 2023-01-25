@@ -1,4 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
+import { useRouter } from "next/router";
 import { Fragment, useState } from "react";
 import { useGlobalContext } from "../contexts";
 import { api } from "../utils/api";
@@ -20,6 +21,8 @@ const CreatePost = () => {
       await utils.posts.getAll.invalidate();
     },
   }).mutateAsync;
+
+  const router = useRouter();
 
   return (
     <Transition appear show={isPostOpen} as={Fragment}>
@@ -98,6 +101,11 @@ const CreatePost = () => {
                             newDirection: "UP",
                             voteId: "RandomString",
                           });
+                          await utils.posts.getPost.setData(
+                            { postId: res.id },
+                            res
+                          );
+                          await router.push(`/posts/${res.id}`);
                           //   await router.prefetch("/");
                         })()
                       }
