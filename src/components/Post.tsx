@@ -206,7 +206,7 @@ const Post = ({
           </div>
           {postData.author.id === session.data?.user?.id ? (
             <div
-              className=" hover:cursor-pointer"
+              className=" rounded-md p-2 hover:cursor-pointer hover:bg-gray-600"
               onClick={() =>
                 void (async () => {
                   await deletePost({ postId: postData.id });
