@@ -204,20 +204,6 @@ const Post = ({
               {dayjs(postData.createdAt).fromNow()}
             </p>
           </div>
-          {postData.author.id === session.data?.user?.id ? (
-            <div
-              className=" rounded-md p-2 hover:cursor-pointer hover:bg-gray-600"
-              onClick={() =>
-                void (async () => {
-                  await deletePost({ postId: postData.id });
-                })()
-              }
-            >
-              <FaTrash size={13} className=" text-red-400" />
-            </div>
-          ) : (
-            <></>
-          )}
         </div>
         {/* Post Content */}
         <div>
@@ -243,6 +229,20 @@ const Post = ({
           </div>
         </div>
       </Link>
+      {postData.author.id === session.data?.user?.id ? (
+        <div
+          className=" rounded-md bg-gray-900 p-2 hover:cursor-pointer hover:bg-gray-600"
+          onClick={() =>
+            void (async () => {
+              await deletePost({ postId: postData.id });
+            })()
+          }
+        >
+          <FaTrash size={13} className=" text-red-400" />
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
