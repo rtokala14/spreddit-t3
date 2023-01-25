@@ -73,15 +73,7 @@ const CommentForm = ({
           <></>
         )}
         <button
-          disabled={
-            comment === ""
-              ? !session.data?.user
-                ? true
-                : false
-              : !session.data?.user
-              ? true
-              : false
-          }
+          disabled={comment === "" ? true : !session.data?.user ? true : false}
           className=" rounded-3xl bg-primary py-1 px-4 text-lg text-white disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-black"
           onClick={() =>
             void (async () => {
