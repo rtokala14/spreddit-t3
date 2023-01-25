@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 import { api } from "../utils/api";
@@ -31,15 +31,31 @@ const CommentForm = ({
   return (
     <div className=" mx-8 w-full self-center">
       <div className=" flex items-center gap-1">
-        <div className=" text-sm">{`Comment as `}</div>
-        <Link
-          href={`/user/${session.data?.user?.id}`}
-          className=" text-sm text-primary hover:cursor-pointer hover:underline"
-        >{`u/${session.data?.user?.name}`}</Link>
-        <div className=" text-sm">{":"}</div>
+        {session.data?.user ? (
+          <>
+            <div className=" text-sm">{`Comment as `}</div>
+            <Link
+              href={`/user/${session.data?.user?.id}`}
+              className=" text-sm text-primary hover:cursor-pointer hover:underline"
+            >{`u/${session.data?.user?.name}`}</Link>
+            <div className=" text-sm">{":"}</div>
+          </>
+        ) : (
+          <div className=" flex w-full items-center justify-center gap-1">
+            <span
+              onClick={() => signIn()}
+              className=" text-xl text-primary hover:cursor-pointer hover:underline"
+            >
+              Login
+            </span>
+            <span className=" text-xl">To Comment</span>
+          </div>
+        )}
       </div>
       <textarea
-        autoFocus
+        // autoFocus
+        inputMode="text"
+        disabled={session.data?.user ? false : true}
         value={comment}
         onChange={(e) => setComment(e.target.value)}
         placeholder="What are your thoughts?"
@@ -57,7 +73,15 @@ const CommentForm = ({
           <></>
         )}
         <button
-          disabled={comment === "" ? true : false}
+          disabled={
+            comment === ""
+              ? !session.data?.user
+                ? true
+                : false
+              : !session.data?.user
+              ? true
+              : false
+          }
           className=" rounded-3xl bg-primary py-1 px-4 text-lg text-white disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-black"
           onClick={() =>
             void (async () => {

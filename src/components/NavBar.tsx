@@ -207,7 +207,7 @@ export const NavBar: React.FC = () => {
                   <div
                     className={`${"flex  w-full items-center justify-between gap-3 rounded-md border border-transparent p-2 hover:cursor-pointer hover:border-lighter "}`}
                   >
-                    <h2 className=" text-md">Dark Mode</h2>
+                    <h2 className=" text-md">Dark Mode (WIP)</h2>
                     {/* TODO Change to adapt dark mode */}
                     <Switch
                       checked={enabled}
@@ -216,7 +216,7 @@ export const NavBar: React.FC = () => {
                         enabled ? "bg-lighter" : "bg-gray-100"
                       } relative inline-flex h-6 w-11 items-center rounded-full`}
                     >
-                      <span className="sr-only">Dark Mode</span>
+                      <span className="sr-only">Dark Mode (WIP)</span>
                       <span
                         className={`${
                           enabled ? "translate-x-6" : "translate-x-1"
